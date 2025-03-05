@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tmap_wait_please">请稍等…</string>
+    <string name="tmap_zoom_out_title">放大</string>
+    <string name="tmap_zoom_in_title">缩小</string>
+</resources>

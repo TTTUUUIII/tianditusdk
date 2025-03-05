@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TMapView">
+        <attr name="showScaleControl" format="boolean" />
+        <attr name="scaleControlGravity" format="enum">
+            <enum name="left_of_top" value="0" />
+            <enum name="right_of_top" value="1" />
+            <enum name="left_of_bottom" value="2" />
+            <enum name="right_of_bottom" value="3" />
+        </attr>
+        <attr name="showZoomControl" format="boolean" />
+        <attr name="zoomControlGravity" format="enum">
+            <enum name="left_of_top" value="0" />
+            <enum name="right_of_top" value="1" />
+            <enum name="left_of_bottom" value="2" />
+            <enum name="right_of_bottom" value="3" />
+        </attr>
+        <attr name="showMapTypeControl" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,67 @@
+package cn.touchair.tianditu;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import java.util.Arrays;
+
+import cn.touchair.tianditu.databinding.ActivityMainBinding;
+import cn.touchair.tianditu.entity.LngLat;
+import cn.touchair.tianditu.map.TMapView;
+import cn.touchair.tianditu.overlay.Icon;
+import cn.touchair.tianditu.overlay.Marker;
+import cn.touchair.tianditu.util.TMapLocationManager;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        checkPermission();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && Arrays.stream(grantResults).sum() == PackageManager.PERMISSION_GRANTED) {
+            onAllowAccess();
+        } else {
+            Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void checkPermission() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            onAllowAccess();
+        }
+    }
+
+    private void onAllowAccess() {
+        TMapLocationManager manager = new TMapLocationManager(this) {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                super.onLocationChanged(location);
+                binding.mapView.setMyLocation(new LngLat(location));
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        manager.startLocation();
+    }
+}

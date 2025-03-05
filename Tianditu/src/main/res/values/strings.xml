@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tmap_wait_please">Please wait…</string>
+    <string name="tmap_zoom_out_title">Zoom Out</string>
+    <string name="tmap_zoom_in_title">Zoom In</string>
+</resources>
