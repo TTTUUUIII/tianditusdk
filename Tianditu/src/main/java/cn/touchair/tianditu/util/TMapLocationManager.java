@@ -1,7 +1,6 @@
 package cn.touchair.tianditu.util;
 
 import android.content.Context;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
@@ -9,7 +8,7 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
-public class TMapLocationManager implements LocationListener {
+public abstract class TMapLocationManager implements LocationListener {
     private static final String TAG = "TMapLocationManager";
 
     public static final int SINGLE            = 1;
@@ -53,10 +52,6 @@ public class TMapLocationManager implements LocationListener {
     @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
     public void stopLocation() {
         lm.removeUpdates(this);
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
     }
 
     public static class LocationOptions {
