@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         TMapLocationManager manager = new TMapLocationManager(this) {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                super.onLocationChanged(location);
                 binding.mapView.setMyLocation(new LngLat(location));
             }
         };
