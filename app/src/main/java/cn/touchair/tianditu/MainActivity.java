@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.Arrays;
 
+import cn.touchair.tianditu.control.Copyright;
 import cn.touchair.tianditu.databinding.ActivityMainBinding;
 import cn.touchair.tianditu.entity.LngLat;
 import cn.touchair.tianditu.map.TMapView;

@@ -12,6 +12,6 @@ public class App extends Application {
         super.onCreate();
         TMapOptions options = new TMapOptions();
         options.zoom = 16;
-        TMapInitializer.initialize("cd6a40c10b97d054b435a60eb67d23b2", options);
+        TMapInitializer.initialize("your_api_key", options);
     }
 }

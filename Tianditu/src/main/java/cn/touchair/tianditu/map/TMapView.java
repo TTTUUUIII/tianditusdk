@@ -31,6 +31,7 @@ import java.util.Map;
 
 import cn.touchair.tianditu.R;
 import cn.touchair.tianditu.control.Control;
+import cn.touchair.tianditu.control.Copyright;
 import cn.touchair.tianditu.control.MapType;
 import cn.touchair.tianditu.control.ScaleControl;
 import cn.touchair.tianditu.control.ZoomControl;
@@ -155,6 +156,14 @@ public class TMapView extends FrameLayout {
         callJs("TOverLay.removeMarker(\"" + ident + "\");");
     }
 
+    public void addCopyright(Copyright copyright) {
+        callJs(String.format(Locale.US, "TCopyright.addCopyright(%s);", copyright.toJson()));
+    }
+
+    public void removeCopyright(@NonNull String ident) {
+        callJs(String.format(Locale.US, "TCopyright.removeCopyright(%s);", ident));
+    }
+
     public @Nullable LocationAddress getLastLocationAddress() {
         return mLastLocationAddress;
     }
@@ -207,7 +216,7 @@ public class TMapView extends FrameLayout {
                 if (mApiLoaded || force) {
                     mEngine.evaluateJavascript(js, null);
                 } else {
-                    mWaitList.add(() -> mEngine.evaluateJavascript(js, null));
+                    mWaitList.add(() -> callJs(js));
                 }
             } catch (Exception e) {
                 e.printStackTrace(System.err);
