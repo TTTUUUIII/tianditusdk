@@ -131,6 +131,14 @@ lm.startLocation();
 
 #### 版权说明（Copyright）
 
+默认情况下版权控件是禁用的，需要通过初始化选项启用该控件。
+
+```java
+TMapOptions options = new TMapOptions();
+options.enableCopyrightControl = true;
+TMapInitializer.initialize("your_api_key", options);
+```
+
 **添加版权**
 
 ```java
