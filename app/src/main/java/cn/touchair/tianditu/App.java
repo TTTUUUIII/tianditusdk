@@ -2,7 +2,6 @@ package cn.touchair.tianditu;
 
 import android.app.Application;
 
-import cn.touchair.tianditu.control.Copyright;
 import cn.touchair.tianditu.util.TMapInitializer;
 import cn.touchair.tianditu.map.TMapOptions;
 

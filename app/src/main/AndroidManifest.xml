@@ -26,10 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="cn.gov.tianditu.API_KEY"
-            android:value="cd6a40c10b97d054b435a60eb67d23b2" />
     </application>
 
 </manifest>

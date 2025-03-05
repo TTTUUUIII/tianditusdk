@@ -1,6 +1,9 @@
 # Tianditu Android SDK
 
+[TOC]
+
 ## 概述
+
 这是对[天地图](https://www.tianditu.gov.cn/) [JavaScript API 4.0](http://lbs.tianditu.gov.cn/api/js4.0/guide.html)的简单封装，使其更便于在Android APP中使用。 目前，它还十分不完善，只添加了很少的一部分常用组件和接口。
 
 | <img src="./Screenshots/Screenshot_20250305_164256.png" width=240 align=left /> | <img src="./Screenshots/Screenshot_20250305_164448.png" width=240 align=left /> | <img src="./Screenshots/Screenshot_20250305_165352.png" width=240 align=left /> |
@@ -9,6 +12,10 @@
 ## 快速开始
 
 ### 必要的配置
+
+#### 申请 API Key
+
+参考[官方说明](http://lbs.tianditu.gov.cn/home.html)
 
 #### 允许`HTTP`
 
@@ -35,7 +42,7 @@
 
 > **定位权限**还需要在应用中动态申请。
 
-### 先初始化
+### 初始化
 
 提供了四个初始化方法，对应两种初始化方式。
 

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,12 +12,8 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.Arrays;
 
-import cn.touchair.tianditu.control.Copyright;
 import cn.touchair.tianditu.databinding.ActivityMainBinding;
 import cn.touchair.tianditu.entity.LngLat;
-import cn.touchair.tianditu.map.TMapView;
-import cn.touchair.tianditu.overlay.Icon;
-import cn.touchair.tianditu.overlay.Marker;
 import cn.touchair.tianditu.util.TMapLocationManager;
 
 public class MainActivity extends AppCompatActivity {
