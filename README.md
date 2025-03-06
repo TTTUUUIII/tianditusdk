@@ -175,7 +175,9 @@ binding.mapView.removeMarker("some_unique_id");
 
 #### 逆地理编码
 
-每调用一次`TMapView::setMyLocation(TLngLat lnglat)`方法，触发一次逆地理编码请求，我们只需要提前注册好用于接收的回调函数即可。
+默认情况下，每调用一次`TMapView::setMyLocation(TLngLat lnglat)`方法，触发一次逆地理编码请求，我们只需要提前注册好用于接收的回调函数即可。
+
+> 提示：使用`TMapView::setMyLocation(TLngLat lnglat, boolean autoGetLocationAddress)`重载可控制是否触发逆地理编码请求。
 
 ```java
 binding.mapView.addLocationAddressUpdatedListener((lngLat, address) -> {
@@ -183,3 +185,8 @@ binding.mapView.addLocationAddressUpdatedListener((lngLat, address) -> {
 });
 ```
 
+当然，也可以手动触发逆地理编码请求，像这样：
+
+```java
+binding.mapView.getLocationAddress(new TLngLat(location));
+```

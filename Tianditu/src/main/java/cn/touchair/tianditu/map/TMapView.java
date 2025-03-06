@@ -136,10 +136,14 @@ public class TMapView extends FrameLayout {
     }
 
     public void setMyLocation(TLngLat lngLat) {
+        setMyLocation(lngLat, true);
+    }
+
+    public void setMyLocation(TLngLat lngLat, boolean autoGetLocationAddress) {
         panTo(lngLat);
         removeMarker(IDENT_MY_LOCATION);
         addMarker(IDENT_MY_LOCATION, lngLat, TIcon.CENTER_POINT);
-        if (!mLocHistory.containsKey(lngLat)) {
+        if (autoGetLocationAddress) {
             getLocationAddress(lngLat);
         }
     }
@@ -162,10 +166,6 @@ public class TMapView extends FrameLayout {
 
     public void removeCopyright(@NonNull String ident) {
         callJs(String.format(Locale.US, "TCopyright.removeCopyright(%s);", ident));
-    }
-
-    public @Nullable TLocationAddress getLastLocationAddress() {
-        return mLastLocationAddress;
     }
 
     private void setZoomControlEnable(boolean enable) {
@@ -202,8 +202,13 @@ public class TMapView extends FrameLayout {
         }
     }
 
-    private void getLocationAddress(TLngLat lngLat) {
-        callJs("TGeocoder.getLocation(" + lngLat.toJson() + ");");
+    public void getLocationAddress(TLngLat lngLat) {
+        TLocationAddress address = mLocHistory.get(lngLat);
+        if (address != null) {
+            notifyLocationAddress(lngLat, address);
+        } else {
+            callJs("TGeocoder.getLocation(" + lngLat.toJson() + ");");
+        }
     }
 
     private void callJs(String js) {
@@ -261,13 +266,17 @@ public class TMapView extends FrameLayout {
     @JavascriptInterface
     public void onLocationAddress(int code, String lnglatJson, String result) {
         if (code == NO_ERROR) {
-            TLngLat lnglat = JsonObject.fromJson(lnglatJson, TLngLat.class);
-            mLastLocationAddress = JsonObject.fromJson(result, TLocationAddress.class);
-            mLocHistory.put(lnglat, mLastLocationAddress);
-            mListeners.forEach(listener -> listener.onLocationAddressUpdated(lnglat, mLastLocationAddress));
+            TLngLat loc = JsonObject.fromJson(lnglatJson, TLngLat.class);
+            TLocationAddress address = JsonObject.fromJson(result, TLocationAddress.class);
+            mLocHistory.put(loc, address);
+            notifyLocationAddress(loc, address);
         } else {
             Log.e(TAG, String.format(Locale.US,"{lnglat=%s, code=%d, msg=%s}", lnglatJson, code, result));
         }
+    }
+
+    private void notifyLocationAddress(TLngLat loc, TLocationAddress address) {
+        mListeners.forEach(listener -> listener.onLocationAddressUpdated(loc, address));
     }
 
     private String getControlPosition(int gravity) {
@@ -289,7 +298,6 @@ public class TMapView extends FrameLayout {
         void onLocationAddressUpdated(TLngLat lngLat, TLocationAddress address);
     }
 
-    private TLocationAddress mLastLocationAddress = null;
     private final Map<TLngLat, TLocationAddress> mLocHistory = new HashMap<>();
 
     private static final String IDENT_MY_LOCATION = "my_location";
