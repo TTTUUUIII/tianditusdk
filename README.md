@@ -91,13 +91,18 @@ TMapInitializer.initialize(applicationContext);
 
 属性：
 
-| Attribute                 | Type      | Default value    |
-| ------------------------- | --------- | ---------------- |
-| `app:showZoomControl`     | `Boolean` | `false`          |
-| `app:zoomControlGravity`  | `Enum`    | `left_of_top`    |
-| `app:showScaleControl`    | `Boolean` | `false`          |
-| `app:scaleControlGravity` | `Enum`    | `left_of_bottom` |
-| `app:showMapTypeControl`  | `Boolean` | `false`          |
+| Attribute                           | Type        | Default value    |
+| ----------------------------------- | ----------- | ---------------- |
+| `app:showZoomControl`               | `Boolean`   | `false`          |
+| `app:zoomControlGravity`            | `Enum`      | `left_of_top`    |
+| `app:showScaleControl`              | `Boolean`   | `false`          |
+| `app:scaleControlGravity`           | `Enum`      | `left_of_bottom` |
+| `app:showMapTypeControl`            | `Boolean`   | `false`          |
+| `app:showOverviewMapControl`        | `Boolean`   | `false`          |
+| `app:overviewMapControlGravity`     | `Enum`      | `right_of_top`   |
+| `app:overviewMapControlDefaultOpen` | `Boolean`   | `false`          |
+| `app:overviewMapControlWidth`       | `Dimension` | `120px`          |
+| `overviewMapControlHeight`          | `Dimension` | `120px`          |
 
 ### 显示位置
 
@@ -122,6 +127,10 @@ lm.startLocation();
 参见[TMapView属性](#显示地图)
 
 #### 比例尺（Scale）
+
+参见[TMapView属性](#显示地图)
+
+#### 鹰眼地图（OverviewMap）
 
 参见[TMapView属性](#显示地图)
 
@@ -163,6 +172,14 @@ binding.mapView.addMarker("some_unique_id", new TLngLat(location));
 
 // or
 // binding.mapView.addMarker("some_unique_id",new TMarker(new TLngLat(location), TIcon.PIN_RED));
+```
+
+**自定义标记图片**
+
+```java
+TIcon icon = TIcon.fromDrawable(getResources(), R.drawable.somw_custom_drawable));
+TIcon icon = TIcon.fromDrawable(getResources(), R.drawable.somw_custom_drawable), new TPoint(scaleWidth, scaleHeight));
+TIcon icon = TIcon.fromBitmap(bitmap, new TPoint(scaleWidth, scaleHeight));
 ```
 
 **删除标记**

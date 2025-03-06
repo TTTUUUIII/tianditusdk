@@ -33,10 +33,12 @@ import cn.touchair.tianditu.R;
 import cn.touchair.tianditu.control.TControl;
 import cn.touchair.tianditu.control.TCopyright;
 import cn.touchair.tianditu.control.TMapType;
+import cn.touchair.tianditu.control.TOverviewMap;
 import cn.touchair.tianditu.control.TScaleControl;
 import cn.touchair.tianditu.control.TZoomControl;
 import cn.touchair.tianditu.entity.TLngLat;
 import cn.touchair.tianditu.entity.TLocationAddress;
+import cn.touchair.tianditu.entity.TPoint;
 import cn.touchair.tianditu.overlay.TIcon;
 import cn.touchair.tianditu.overlay.TMarker;
 import cn.touchair.tianditu.util.JsonObject;
@@ -63,6 +65,11 @@ public class TMapView extends FrameLayout {
     private int mScaleControlGravity = LEFT_OF_BOTTOM;
     private boolean mShowZoomControl = false;
     private int mZoomControlGravity = LEFT_OF_TOP;
+    private boolean mShowOverviewMapControl = false;
+    private int mOverviewMapControlGravity = RIGHT_OF_TOP;
+    private boolean mOverviewMapControlDefaultOpen = false;
+    private float mOverviewMapControlWidth = 120;
+    private float mOverviewMapControlHeight = 120;
     private boolean mShowMapTypeControl = false;
 
     public TMapView(@NonNull Context context) {
@@ -124,6 +131,11 @@ public class TMapView extends FrameLayout {
             mShowZoomControl = attributes.getBoolean(R.styleable.TMapView_showZoomControl, mShowZoomControl);
             mZoomControlGravity = attributes.getInt(R.styleable.TMapView_zoomControlGravity, mZoomControlGravity);
             mShowMapTypeControl = attributes.getBoolean(R.styleable.TMapView_showMapTypeControl, mShowMapTypeControl);
+            mShowOverviewMapControl = attributes.getBoolean(R.styleable.TMapView_showOverviewMapControl, mShowOverviewMapControl);
+            mOverviewMapControlGravity = attributes.getInt(R.styleable.TMapView_overviewMapControlGravity, mOverviewMapControlGravity);
+            mOverviewMapControlDefaultOpen = attributes.getBoolean(R.styleable.TMapView_overviewMapControlDefaultOpen, mOverviewMapControlDefaultOpen);
+            mOverviewMapControlWidth = attributes.getDimension(R.styleable.TMapView_overviewMapControlWidth, mOverviewMapControlWidth);
+            mOverviewMapControlHeight = attributes.getDimension(R.styleable.TMapView_overviewMapControlHeight, mOverviewMapControlHeight);
         }
     }
 
@@ -166,6 +178,18 @@ public class TMapView extends FrameLayout {
 
     public void removeCopyright(@NonNull String ident) {
         callJs(String.format(Locale.US, "TCopyright.removeCopyright(%s);", ident));
+    }
+
+    private void setOverviewMapControlEnable(boolean enable) {
+        if (enable) {
+            TOverviewMap overviewMap = new TOverviewMap();
+            overviewMap.position = getControlPosition(mOverviewMapControlGravity);
+            overviewMap.isOpen = mOverviewMapControlDefaultOpen;
+            overviewMap.size = new TPoint((int) mOverviewMapControlWidth, (int) mOverviewMapControlHeight);
+            callJs(String.format(Locale.US, "TControl.addOverviewMapControl(%s);", overviewMap.toJson()));
+        } else {
+            callJs("TControl.removeOverviewMapControl();");
+        }
     }
 
     private void setZoomControlEnable(boolean enable) {
@@ -258,6 +282,7 @@ public class TMapView extends FrameLayout {
         setScaleControlEnable(mShowScaleControl);
         setZoomControlEnable(mShowZoomControl);
         setMapTypeControlEnable(mShowMapTypeControl);
+        setOverviewMapControlEnable(mShowOverviewMapControl);
         while (!mWaitList.isEmpty()) {
             mWaitList.remove().run();
         }

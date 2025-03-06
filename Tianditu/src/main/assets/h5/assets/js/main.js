@@ -74,6 +74,7 @@ let TControl = {
     _scaleControl: undefined,
     _copyright: undefined,
     _mapTypeControl: undefined,
+    __overviewMapControl: undefined,
     addZoomControl: function(ctx) {
         if(this._zoomControl) return;
         let opts = {
@@ -107,20 +108,9 @@ let TControl = {
     },
     addScaleControl: function(ctx) {
         if(this._scaleControl) return;
-        let opts = {};
-        switch(ctx.position) {
-            case "T_ANCHOR_TOP_RIGHT":
-                opts.position = T_ANCHOR_TOP_RIGHT;
-                break
-            case "T_ANCHOR_BOTTOM_LEFT":
-                opts.position = T_ANCHOR_BOTTOM_LEFT;
-                break
-            case "T_ANCHOR_BOTTOM_RIGHT":
-                opts.position = T_ANCHOR_BOTTOM_RIGHT
-                break
-            default:
-                opts.position = T_ANCHOR_TOP_LEFT
-        }
+        let opts = {
+            position: Functions.stringAsPosition(ctx.position)
+        };
         this._scaleControl = new T.Control.Scale(opts);
         TMap.addControl(this._scaleControl);
     },
@@ -165,6 +155,22 @@ let TControl = {
             TMap.removeControl(this._mapTypeControl);
             this._mapTypeControl = undefined;
         }
+    },
+    addOverviewMapControl: function(ctx) {
+        if(this._overviewMapControl) return;
+        let opts = {
+            size: ctx.size,
+            position: Functions.stringAsPosition(ctx.position),
+            isOpen: ctx.isOpen
+        };
+        this._overviewMapControl = new T.Control.OverviewMap(opts);
+        TMap.addControl(this._overviewMapControl);
+    },
+    removeOverviewMapControl: function() {
+        if(this._overviewMapControl) {
+            TMap.removeControl(this._overviewMapControl);
+            this._overviewMapControl = undefined;
+        }
     }
 }
 
@@ -202,6 +208,21 @@ let TGeocoder = {
         geocoder.getLocation(new T.LngLat(lnglat.lng, lnglat.lat), resp => {
             AndroidInterface && AndroidInterface.onLocationAddress(parseInt(resp.getStatus(), 10), JSON.stringify(lnglat), JSON.stringify(resp));
         });
+    }
+}
+
+let Functions = {
+    stringAsPosition: (posstr) => {
+        switch(posstr) {
+            case "T_ANCHOR_TOP_RIGHT":
+                return T_ANCHOR_TOP_RIGHT;
+            case "T_ANCHOR_BOTTOM_LEFT":
+                return T_ANCHOR_BOTTOM_LEFT;
+            case "T_ANCHOR_BOTTOM_RIGHT":
+                return T_ANCHOR_BOTTOM_RIGHT
+            default:
+                return T_ANCHOR_TOP_LEFT
+        }
     }
 }
 

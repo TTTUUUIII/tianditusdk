@@ -15,6 +15,16 @@
             <enum name="left_of_bottom" value="2" />
             <enum name="right_of_bottom" value="3" />
         </attr>
+        <attr name="showOverviewMapControl" format="boolean" />
+        <attr name="overviewMapControlGravity" format="enum">
+            <enum name="left_of_top" value="0" />
+            <enum name="right_of_top" value="1" />
+            <enum name="left_of_bottom" value="2" />
+            <enum name="right_of_bottom" value="3" />
+        </attr>
+        <attr name="overviewMapControlDefaultOpen" format="boolean" />
+        <attr name="overviewMapControlWidth" format="dimension" />
+        <attr name="overviewMapControlHeight" format="dimension" />
         <attr name="showMapTypeControl" format="boolean" />
     </declare-styleable>
 </resources>
