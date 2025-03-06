@@ -171,6 +171,7 @@ let TControl = {
 let TOverLay = {
     _overlays: new Map(),
     addMarker: function(ident, ctx) {
+        this.removeMarker(ident);
         let opts = {
             "draggable": ctx.draggable,
             "title": ctx.title,
