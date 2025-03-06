@@ -6,16 +6,16 @@ import java.util.Objects;
 
 import cn.touchair.tianditu.util.JsonObject;
 
-public class LngLat implements JsonObject {
+public class TLngLat implements JsonObject {
     public final double lng;
     public final double lat;
 
-    public LngLat(double lng, double lat) {
+    public TLngLat(double lng, double lat) {
         this.lng = lng;
         this.lat = lat;
     }
 
-    public LngLat(Location location) {
+    public TLngLat(Location location) {
         this(location.getLongitude(), location.getLatitude());
     }
 
@@ -23,7 +23,7 @@ public class LngLat implements JsonObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LngLat lngLat = (LngLat) o;
+        TLngLat lngLat = (TLngLat) o;
         return Objects.equals(lng, lngLat.lng) && Objects.equals(lat, lngLat.lat);
     }
 

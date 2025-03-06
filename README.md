@@ -106,7 +106,7 @@ TMapLocationManager lm = new TMapLocationManager(this) {
     @Override
     public void onLocationChanged(@NonNull Location location) {
         super.onLocationChanged(location);
-        binding.mapView.setMyLocation(new LngLat(location));
+        binding.mapView.setMyLocation(new TLngLat(location));
     }
 };
 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -142,7 +142,7 @@ TMapInitializer.initialize("your_api_key", options);
 **添加版权**
 
 ```java
-binding.mapView.addCopyright(new Copyright("some_unique_id", "Copyright (C) 2022 Tianditu. All rights reserved."));
+binding.mapView.addCopyright(new TCopyright("some_unique_id", "Copyright (C) 2022 Tianditu. All rights reserved."));
 ```
 
 **删除版权**
@@ -159,7 +159,10 @@ binding.mapView.removeCopyright("some_unique_id");
 
 ```java
 // add default style marker
-binding.mapView.addMarker("some_unique_id", new LngLat(location));
+binding.mapView.addMarker("some_unique_id", new TLngLat(location));
+
+// or
+// binding.mapView.addMarker("some_unique_id",new TMarker(new TLngLat(location), TIcon.PIN_RED));
 ```
 
 **删除标记**
@@ -172,7 +175,7 @@ binding.mapView.removeMarker("some_unique_id");
 
 #### 逆地理编码
 
-每调用一次`TMapView::setMyLocation(LngLat lnglat)`方法，触发一次逆地理编码请求，我们只需要提前注册好用于接收的回调函数即可。
+每调用一次`TMapView::setMyLocation(TLngLat lnglat)`方法，触发一次逆地理编码请求，我们只需要提前注册好用于接收的回调函数即可。
 
 ```java
 binding.mapView.addLocationAddressUpdatedListener((lngLat, address) -> {

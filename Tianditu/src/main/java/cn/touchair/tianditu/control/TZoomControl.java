@@ -1,6 +1,6 @@
 package cn.touchair.tianditu.control;
 
-public class ZoomControl implements Control {
+public class TZoomControl implements TControl {
 
     public String position = T_ANCHOR_TOP_LEFT;
     public String zoomInText = "+";

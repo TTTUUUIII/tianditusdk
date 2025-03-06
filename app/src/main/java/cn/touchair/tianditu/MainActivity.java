@@ -13,7 +13,9 @@ import androidx.core.app.ActivityCompat;
 import java.util.Arrays;
 
 import cn.touchair.tianditu.databinding.ActivityMainBinding;
-import cn.touchair.tianditu.entity.LngLat;
+import cn.touchair.tianditu.entity.TLngLat;
+import cn.touchair.tianditu.overlay.TIcon;
+import cn.touchair.tianditu.overlay.TMarker;
 import cn.touchair.tianditu.util.TMapLocationManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         TMapLocationManager manager = new TMapLocationManager(this) {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                binding.mapView.setMyLocation(new LngLat(location));
+                binding.mapView.setMyLocation(new TLngLat(location));
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

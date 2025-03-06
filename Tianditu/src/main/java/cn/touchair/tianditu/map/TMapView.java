@@ -30,15 +30,15 @@ import java.util.Locale;
 import java.util.Map;
 
 import cn.touchair.tianditu.R;
-import cn.touchair.tianditu.control.Control;
-import cn.touchair.tianditu.control.Copyright;
-import cn.touchair.tianditu.control.MapType;
-import cn.touchair.tianditu.control.ScaleControl;
-import cn.touchair.tianditu.control.ZoomControl;
-import cn.touchair.tianditu.entity.LngLat;
-import cn.touchair.tianditu.entity.LocationAddress;
-import cn.touchair.tianditu.overlay.Icon;
-import cn.touchair.tianditu.overlay.Marker;
+import cn.touchair.tianditu.control.TControl;
+import cn.touchair.tianditu.control.TCopyright;
+import cn.touchair.tianditu.control.TMapType;
+import cn.touchair.tianditu.control.TScaleControl;
+import cn.touchair.tianditu.control.TZoomControl;
+import cn.touchair.tianditu.entity.TLngLat;
+import cn.touchair.tianditu.entity.TLocationAddress;
+import cn.touchair.tianditu.overlay.TIcon;
+import cn.touchair.tianditu.overlay.TMarker;
 import cn.touchair.tianditu.util.JsonObject;
 import cn.touchair.tianditu.util.TMapInitializer;
 
@@ -127,28 +127,28 @@ public class TMapView extends FrameLayout {
         }
     }
 
-    public void panTo(LngLat lngLat) {
+    public void panTo(TLngLat lngLat) {
         callJs("TMap.panTo("+ lngLat.toJson() +");");
     }
 
-    public void addMarker(String ident, LngLat lngLat) {
-        addMarker(ident, new Marker(lngLat));
+    public void addMarker(String ident, TLngLat lngLat) {
+        addMarker(ident, new TMarker(lngLat));
     }
 
-    public void setMyLocation(LngLat lngLat) {
+    public void setMyLocation(TLngLat lngLat) {
         panTo(lngLat);
         removeMarker(IDENT_MY_LOCATION);
-        addMarker(IDENT_MY_LOCATION, lngLat, Icon.CENTER_POINT);
+        addMarker(IDENT_MY_LOCATION, lngLat, TIcon.CENTER_POINT);
         if (!mLocHistory.containsKey(lngLat)) {
             getLocationAddress(lngLat);
         }
     }
 
-    public void addMarker(@NonNull String ident, LngLat lngLat, Icon icon) {
-        addMarker(ident, new Marker(lngLat, icon));
+    public void addMarker(@NonNull String ident, TLngLat lngLat, TIcon icon) {
+        addMarker(ident, new TMarker(lngLat, icon));
     }
 
-    public void addMarker(@NonNull String ident, Marker marker) {
+    public void addMarker(@NonNull String ident, TMarker marker) {
         callJs(String.format(Locale.US, "TOverLay.addMarker(\"%s\", %s)", ident, marker.toJson()));
     }
 
@@ -156,7 +156,7 @@ public class TMapView extends FrameLayout {
         callJs("TOverLay.removeMarker(\"" + ident + "\");");
     }
 
-    public void addCopyright(Copyright copyright) {
+    public void addCopyright(TCopyright copyright) {
         callJs(String.format(Locale.US, "TCopyright.addCopyright(%s);", copyright.toJson()));
     }
 
@@ -164,13 +164,13 @@ public class TMapView extends FrameLayout {
         callJs(String.format(Locale.US, "TCopyright.removeCopyright(%s);", ident));
     }
 
-    public @Nullable LocationAddress getLastLocationAddress() {
+    public @Nullable TLocationAddress getLastLocationAddress() {
         return mLastLocationAddress;
     }
 
     private void setZoomControlEnable(boolean enable) {
         if (enable) {
-            ZoomControl zoomControl = new ZoomControl();
+            TZoomControl zoomControl = new TZoomControl();
             zoomControl.position = getControlPosition(mZoomControlGravity);
             zoomControl.zoomInTitle = getContext().getString(R.string.tmap_zoom_in_title);
             zoomControl.zoomOutTitle = getContext().getString(R.string.tmap_zoom_out_title);
@@ -182,7 +182,7 @@ public class TMapView extends FrameLayout {
 
     private void setScaleControlEnable(boolean enable) {
         if (enable){
-            ScaleControl scaleControl = new ScaleControl();
+            TScaleControl scaleControl = new TScaleControl();
             scaleControl.position = getControlPosition(mScaleControlGravity);
             callJs(String.format(Locale.US, "TControl.addScaleControl(%s);", scaleControl.toJson()));
         } else {
@@ -192,17 +192,17 @@ public class TMapView extends FrameLayout {
 
     private void setMapTypeControlEnable(boolean enable) {
         if (enable) {
-            ArrayList<MapType> mapTypes = new ArrayList<>();
-            mapTypes.add(MapType.NORMAL);
-            mapTypes.add(MapType.SATELLITE);
-            mapTypes.add(MapType.TERRAIN);
+            ArrayList<TMapType> mapTypes = new ArrayList<>();
+            mapTypes.add(TMapType.NORMAL);
+            mapTypes.add(TMapType.SATELLITE);
+            mapTypes.add(TMapType.TERRAIN);
             callJs(String.format(Locale.US, "TControl.addMapTypeControl(%s);", JsonObject.gson.toJson(mapTypes)));
         } else {
             callJs("TControl.removeMapTypeControl();");
         }
     }
 
-    private void getLocationAddress(LngLat lngLat) {
+    private void getLocationAddress(TLngLat lngLat) {
         callJs("TGeocoder.getLocation(" + lngLat.toJson() + ");");
     }
 
@@ -261,8 +261,8 @@ public class TMapView extends FrameLayout {
     @JavascriptInterface
     public void onLocationAddress(int code, String lnglatJson, String result) {
         if (code == NO_ERROR) {
-            LngLat lnglat = JsonObject.fromJson(lnglatJson, LngLat.class);
-            mLastLocationAddress = JsonObject.fromJson(result, LocationAddress.class);
+            TLngLat lnglat = JsonObject.fromJson(lnglatJson, TLngLat.class);
+            mLastLocationAddress = JsonObject.fromJson(result, TLocationAddress.class);
             mLocHistory.put(lnglat, mLastLocationAddress);
             mListeners.forEach(listener -> listener.onLocationAddressUpdated(lnglat, mLastLocationAddress));
         } else {
@@ -273,24 +273,24 @@ public class TMapView extends FrameLayout {
     private String getControlPosition(int gravity) {
         switch (gravity) {
             case LEFT_OF_TOP:
-                return Control.T_ANCHOR_TOP_LEFT;
+                return TControl.T_ANCHOR_TOP_LEFT;
             case RIGHT_OF_TOP:
-                return Control.T_ANCHOR_TOP_RIGHT;
+                return TControl.T_ANCHOR_TOP_RIGHT;
             case LEFT_OF_BOTTOM:
-                return Control.T_ANCHOR_BOTTOM_LEFT;
+                return TControl.T_ANCHOR_BOTTOM_LEFT;
             case RIGHT_OF_BOTTOM:
-                return Control.T_ANCHOR_BOTTOM_RIGHT;
+                return TControl.T_ANCHOR_BOTTOM_RIGHT;
             default:
                 throw new RuntimeException("Unsupported gravity: " + gravity);
         }
     }
 
     public interface LocationAddressListener {
-        void onLocationAddressUpdated(LngLat lngLat, LocationAddress address);
+        void onLocationAddressUpdated(TLngLat lngLat, TLocationAddress address);
     }
 
-    private LocationAddress mLastLocationAddress = null;
-    private final Map<LngLat, LocationAddress> mLocHistory = new HashMap<>();
+    private TLocationAddress mLastLocationAddress = null;
+    private final Map<TLngLat, TLocationAddress> mLocHistory = new HashMap<>();
 
     private static final String IDENT_MY_LOCATION = "my_location";
 }

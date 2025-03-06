@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import cn.touchair.tianditu.util.JsonObject;
 
-public class AddressComponent implements JsonObject {
+public class TAddressComponent implements JsonObject {
     public String address;
     @SerializedName("address_distance")
     public Number addressDistance;

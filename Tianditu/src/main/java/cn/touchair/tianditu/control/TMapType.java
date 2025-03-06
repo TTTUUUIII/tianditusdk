@@ -1,6 +1,6 @@
 package cn.touchair.tianditu.control;
 
-public class MapType implements Control {
+public class TMapType implements TControl {
 
     private static final String TMAP_NORMAL_MAP = "TMAP_NORMAL_MAP"; /*传统*/
     private static final String TMAP_NORMAL_MAP_ICON = "https://api.tianditu.gov.cn/v4.0/image/map/maptype/vector.png"; /*传统*/
@@ -18,37 +18,37 @@ public class MapType implements Control {
     private final String icon;
     private final String layer;
 
-    public MapType(String title, String icon, String layer) {
+    public TMapType(String title, String icon, String layer) {
         this.title = title;
         this.icon = icon;
         this.layer = layer;
     }
 
-    public static final MapType NORMAL = new MapType(
+    public static final TMapType NORMAL = new TMapType(
             "传统",
             TMAP_NORMAL_MAP_ICON,
             "TMAP_NORMAL_MAP"
     );
 
-    public static final MapType SATELLITE = new MapType(
+    public static final TMapType SATELLITE = new TMapType(
             "卫星",
             TMAP_SATELLITE_MAP_ICON,
             "TMAP_SATELLITE_MAP"
     );
 
-    public static final MapType HYBRID = new MapType(
+    public static final TMapType HYBRID = new TMapType(
             "卫星混合",
             TMAP_HYBRID_MAP_ICON,
             "TMAP_HYBRID_MAP"
     );
 
-    public static final MapType TERRAIN = new MapType(
+    public static final TMapType TERRAIN = new TMapType(
             "地形",
             TMAP_TERRAIN_MAP_ICON,
             "TMAP_TERRAIN_MAP"
     );
 
-    public static final MapType TERRAIN_HYBRID = new MapType(
+    public static final TMapType TERRAIN_HYBRID = new TMapType(
             "地形混合",
             TMAP_TERRAIN_HYBRID_MAP_ICON,
             "TMAP_TERRAIN_HYBRID_MAP"

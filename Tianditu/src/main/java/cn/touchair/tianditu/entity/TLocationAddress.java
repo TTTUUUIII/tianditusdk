@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import cn.touchair.tianditu.util.JsonObject;
 
-public class LocationAddress implements JsonObject {
-    public AddressComponent addressComponent;
+public class TLocationAddress implements JsonObject {
+    public TAddressComponent addressComponent;
     @SerializedName("formatted_address")
     public String formattedAddress;
 
