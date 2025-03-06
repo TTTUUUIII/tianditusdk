@@ -92,7 +92,7 @@ TMapInitializer.initialize(applicationContext);
 属性：
 
 | Attribute                           | Type        | Default value    |
-| ----------------------------------- | ----------- | ---------------- |
+|-------------------------------------| ----------- | ---------------- |
 | `app:showZoomControl`               | `Boolean`   | `false`          |
 | `app:zoomControlGravity`            | `Enum`      | `left_of_top`    |
 | `app:showScaleControl`              | `Boolean`   | `false`          |
@@ -102,7 +102,7 @@ TMapInitializer.initialize(applicationContext);
 | `app:overviewMapControlGravity`     | `Enum`      | `right_of_top`   |
 | `app:overviewMapControlDefaultOpen` | `Boolean`   | `false`          |
 | `app:overviewMapControlWidth`       | `Dimension` | `120px`          |
-| `overviewMapControlHeight`          | `Dimension` | `120px`          |
+| `app:overviewMapControlHeight`      | `Dimension` | `120px`          |
 
 ### 显示位置
 
