@@ -3,6 +3,7 @@ package cn.touchair.tianditu.util;
 import android.content.Context;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -58,5 +59,11 @@ public abstract class TMapLocationManager implements LocationListener {
         public String provider = LocationManager.GPS_PROVIDER;
         private final long minTime = 10000L;
         private final float minDistance = 10.0f;
+
+        public TLocationOptions() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                provider = LocationManager.FUSED_PROVIDER;
+            }
+        }
     }
 }
