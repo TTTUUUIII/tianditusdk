@@ -188,6 +188,20 @@ TIcon icon = TIcon.fromBitmap(bitmap, new TPoint(scaleWidth, scaleHeight));
 binding.mapView.removeMarker("some_unique_id");
 ```
 
+#### 文字标签（Label）
+
+**添加标签**
+
+```java
+binding.mapView.addLabel("some_unique_id", new TLabel("Simple Text Label", new TLngLat(location)));
+```
+
+**删除标签**
+
+```java
+binding.mapView.removeLabel("some_unique_id");
+```
+
 ### 服务类
 
 #### 逆地理编码

@@ -40,6 +40,7 @@ import cn.touchair.tianditu.entity.TLngLat;
 import cn.touchair.tianditu.entity.TLocationAddress;
 import cn.touchair.tianditu.entity.TPoint;
 import cn.touchair.tianditu.overlay.TIcon;
+import cn.touchair.tianditu.overlay.TLabel;
 import cn.touchair.tianditu.overlay.TMarker;
 import cn.touchair.tianditu.util.JsonObject;
 import cn.touchair.tianditu.util.TMapInitializer;
@@ -166,6 +167,14 @@ public class TMapView extends FrameLayout {
 
     public void addMarker(@NonNull String ident, TMarker marker) {
         callJs(String.format(Locale.US, "TOverLay.addMarker(\"%s\", %s)", ident, marker.toJson()));
+    }
+
+    public void addLabel(@NonNull String ident, TLabel label) {
+        callJs(String.format(Locale.US, "TOverLay.addLabel(\"%s\", %s)", ident, label.toJson()));
+    }
+
+    public void removeLabel(@NonNull String ident) {
+        callJs("TOverLay.removeLabel(\"" + ident + "\");");
     }
 
     public void removeMarker(String ident) {

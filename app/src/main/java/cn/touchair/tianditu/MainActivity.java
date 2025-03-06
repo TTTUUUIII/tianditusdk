@@ -14,9 +14,6 @@ import java.util.Arrays;
 
 import cn.touchair.tianditu.databinding.ActivityMainBinding;
 import cn.touchair.tianditu.entity.TLngLat;
-import cn.touchair.tianditu.entity.TPoint;
-import cn.touchair.tianditu.overlay.TIcon;
-import cn.touchair.tianditu.overlay.TMarker;
 import cn.touchair.tianditu.util.TMapLocationManager;
 
 public class MainActivity extends AppCompatActivity {

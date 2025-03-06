@@ -8,7 +8,7 @@ function print(msg) {
 function initTMap(key, ctx) {
     var script = document.createElement('script');
     script.src = `https://api.tianditu.gov.cn/api?v=${VERSION}&tk=${key}`;
-    script.onload = function() {
+    script.onload = function () {
         window.map = new T.Map('tmap', {
             projection: ctx.projection,
             minZoom: ctx.minZoom,
@@ -17,7 +17,7 @@ function initTMap(key, ctx) {
             center: ctx.center,
             zoom: ctx.zoom
         });
-        if(ctx.enableCopyrightControl) {
+        if (ctx.enableCopyrightControl) {
             window.copyrightControl = new T.Control.Copyright();
             TMap.addControl(copyrightControl);
         }
@@ -29,41 +29,41 @@ function initTMap(key, ctx) {
 
 
 let TMap = {
-    setStyle: function(style) {
+    setStyle: function (style) {
         map && map.setStyle(style);
     },
-    panTo: function(lnglat) {
+    panTo: function (lnglat) {
         map && map.panTo(lnglat);
     },
-    addOverLay: function(overlay) {
+    addOverLay: function (overlay) {
         map && map.addOverLay(overlay);
     },
-    removeOverLay: function(overlay) {
+    removeOverLay: function (overlay) {
         map && map.removeOverLay(overlay);
     },
-    clearOverLays: function() {
+    clearOverLays: function () {
         map && map.clearOverLays();
     },
-    addControl: function(control) {
+    addControl: function (control) {
         map && map.addControl(control);
     },
-    removeControl: function(control) {
+    removeControl: function (control) {
         map && map.removeControl(control);
     }
 }
 
 let TCopyright = {
     _copyrights: new Map(),
-    addCopyright: function(copyright) {
-        if(this._copyrights.has(copyright.id)) return;
-        if(copyrightControl) {
+    addCopyright: function (copyright) {
+        if (this._copyrights.has(copyright.id)) return;
+        if (copyrightControl) {
             copyrightControl.addCopyright(copyright);
             this._copyrights[copyright.id] = copyright;
         }
     },
     removeCopyright(ident) {
         let copyright = this._copyrights[ident];
-        if(copyright && copyrightControl) {
+        if (copyright && copyrightControl) {
             copyrightControl.removeCopyright(this._copyrights[ident])
         }
     }
@@ -75,8 +75,8 @@ let TControl = {
     _copyright: undefined,
     _mapTypeControl: undefined,
     __overviewMapControl: undefined,
-    addZoomControl: function(ctx) {
-        if(this._zoomControl) return;
+    addZoomControl: function (ctx) {
+        if (this._zoomControl) return;
         let opts = {
             zoomInText: ctx.zoomInText,
             zoomOutText: ctx.zoomOutText,
@@ -84,7 +84,7 @@ let TControl = {
             zoomOutTitle: ctx.zoomOutTitle,
 
         };
-        switch(ctx.position) {
+        switch (ctx.position) {
             case "T_ANCHOR_TOP_RIGHT":
                 opts.position = T_ANCHOR_TOP_RIGHT;
                 break
@@ -100,35 +100,35 @@ let TControl = {
         this._zoomControl = new T.Control.Zoom(opts);
         TMap.addControl(this._zoomControl);
     },
-    removeZoomControl: function() {
-        if(this._zoomControl) {
+    removeZoomControl: function () {
+        if (this._zoomControl) {
             TMap.removeControl(this._zoomControl);
             this._zoomControl = undefined;
         }
     },
-    addScaleControl: function(ctx) {
-        if(this._scaleControl) return;
+    addScaleControl: function (ctx) {
+        if (this._scaleControl) return;
         let opts = {
             position: Functions.stringAsPosition(ctx.position)
         };
         this._scaleControl = new T.Control.Scale(opts);
         TMap.addControl(this._scaleControl);
     },
-    removeScaleControl: function() {
-        if(this._scaleControl) {
+    removeScaleControl: function () {
+        if (this._scaleControl) {
             TMap.removeControl(this._scaleControl);
             this._scaleControl = undefined;
         }
     },
-    addMapTypeControl: function(ctx) {
-        if(this._mapTypeControl) return;
+    addMapTypeControl: function (ctx) {
+        if (this._mapTypeControl) return;
         let opts = [];
-        for(it of ctx) {
+        for (it of ctx) {
             let opt = {
                 title: it.title,
                 icon: it.icon,
             };
-            switch(it.layer) {
+            switch (it.layer) {
                 case "TMAP_SATELLITE_MAP":
                     opt.layer = TMAP_SATELLITE_MAP;
                     break
@@ -150,14 +150,14 @@ let TControl = {
         this._mapTypeControl = new T.Control.MapType(opts);
         TMap.addControl(this._mapTypeControl);
     },
-    removeMapTypeControl: function() {
-        if(this._mapTypeControl) {
+    removeMapTypeControl: function () {
+        if (this._mapTypeControl) {
             TMap.removeControl(this._mapTypeControl);
             this._mapTypeControl = undefined;
         }
     },
-    addOverviewMapControl: function(ctx) {
-        if(this._overviewMapControl) return;
+    addOverviewMapControl: function (ctx) {
+        if (this._overviewMapControl) return;
         let opts = {
             size: ctx.size,
             position: Functions.stringAsPosition(ctx.position),
@@ -166,8 +166,8 @@ let TControl = {
         this._overviewMapControl = new T.Control.OverviewMap(opts);
         TMap.addControl(this._overviewMapControl);
     },
-    removeOverviewMapControl: function() {
-        if(this._overviewMapControl) {
+    removeOverviewMapControl: function () {
+        if (this._overviewMapControl) {
             TMap.removeControl(this._overviewMapControl);
             this._overviewMapControl = undefined;
         }
@@ -176,35 +176,50 @@ let TControl = {
 
 let TOverLay = {
     _overlays: new Map(),
-    addMarker: function(ident, ctx) {
-        this.removeMarker(ident);
-        let opts = {
-            "draggable": ctx.draggable,
-            "title": ctx.title,
-            "zIndexOffset": ctx.zIndexOffset,
-            "opacity": ctx.opacity
-        }
-        if(ctx.icon) {
-            opts.icon = new T.Icon(
-                {
-                    "iconSize": new T.Point(ctx.icon.iconSize.x, ctx.icon.iconSize.y), 
-                    "iconUrl": ctx.icon.iconUrl, 
-                    "iconAnchor": new T.Point(ctx.icon.iconAnchor.x, ctx.icon.iconAnchor.y)
-                }
-            );
-        }
-        if(map) {
+    addMarker: function (ident, ctx) {
+        if (map) {
+            this.removeMarker(ident);
+            let opts = {
+                "draggable": ctx.draggable,
+                "title": ctx.title,
+                "zIndexOffset": ctx.zIndexOffset,
+                "opacity": ctx.opacity
+            }
+            if (ctx.icon) {
+                opts.icon = new T.Icon(
+                    {
+                        "iconSize": new T.Point(ctx.icon.iconSize.x, ctx.icon.iconSize.y),
+                        "iconUrl": ctx.icon.iconUrl,
+                        "iconAnchor": new T.Point(ctx.icon.iconAnchor.x, ctx.icon.iconAnchor.y)
+                    }
+                );
+            }
             this._overlays[ident] = new T.Marker(ctx.lngLat, opts);
             TMap.addOverLay(this._overlays[ident]);
         }
     },
-    removeMarker: function(ident) {
+    removeMarker: function (ident) {
+        this._overlays[ident] && TMap.removeOverLay(this._overlays[ident]);
+    },
+    addLabel: function (ident, ctx) {
+        if (map) {
+            this.removeLabel(ident);
+            let lable = new T.Label({
+                text: ctx.text,
+                offset: ctx.offset,
+                position: ctx.position
+            });
+            this._overlays[ident] = lable;
+            TMap.addOverLay(this._overlays[ident]);
+        }
+    },
+    removeLabel: function (ident) {
         this._overlays[ident] && TMap.removeOverLay(this._overlays[ident]);
     }
 }
 
 let TGeocoder = {
-    getLocation: function(lnglat) {
+    getLocation: function (lnglat) {
         geocoder.getLocation(new T.LngLat(lnglat.lng, lnglat.lat), resp => {
             AndroidInterface && AndroidInterface.onLocationAddress(parseInt(resp.getStatus(), 10), JSON.stringify(lnglat), JSON.stringify(resp));
         });
@@ -213,7 +228,7 @@ let TGeocoder = {
 
 let Functions = {
     stringAsPosition: (posstr) => {
-        switch(posstr) {
+        switch (posstr) {
             case "T_ANCHOR_TOP_RIGHT":
                 return T_ANCHOR_TOP_RIGHT;
             case "T_ANCHOR_BOTTOM_LEFT":
@@ -226,12 +241,12 @@ let Functions = {
     }
 }
 
-window.onload = function() {
-    if(!window.AndroidInterface) {
+window.onload = function () {
+    if (!window.AndroidInterface) {
         initTMap(
             "cd6a40c10b97d054b435a60eb67d23b2",
             {
-                center: { lng: 116.40769, lat: 39.89945},
+                center: { lng: 116.40769, lat: 39.89945 },
                 zoom: 12,
                 copyright: {
                     id: "123",
@@ -241,4 +256,4 @@ window.onload = function() {
         );
         console.log("Onload Initialize called!");
     }
- }
+}
