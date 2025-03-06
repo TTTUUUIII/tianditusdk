@@ -14,14 +14,14 @@ public abstract class TMapLocationManager implements LocationListener {
     public static final int SINGLE            = 1;
     public static final int CYCLE             = 2;
 
-    private final LocationOptions options;
+    private final TLocationOptions options;
     private final LocationManager lm;
 
     public TMapLocationManager(@NonNull Context context) {
-        this(context, new LocationOptions());
+        this(context, new TLocationOptions());
     }
 
-    public TMapLocationManager(@NonNull Context context, LocationOptions options) {
+    public TMapLocationManager(@NonNull Context context, TLocationOptions options) {
         this.options = options;
         this.lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);;
     }
@@ -54,7 +54,7 @@ public abstract class TMapLocationManager implements LocationListener {
         lm.removeUpdates(this);
     }
 
-    public static class LocationOptions {
+    public static class TLocationOptions {
         public String provider = LocationManager.GPS_PROVIDER;
         private final long minTime = 10000L;
         private final float minDistance = 10.0f;
