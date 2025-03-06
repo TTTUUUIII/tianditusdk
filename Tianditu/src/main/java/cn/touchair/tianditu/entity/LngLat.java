@@ -7,10 +7,10 @@ import java.util.Objects;
 import cn.touchair.tianditu.util.JsonObject;
 
 public class LngLat implements JsonObject {
-    public final Number lng;
-    public final Number lat;
+    public final double lng;
+    public final double lat;
 
-    public LngLat(Number lng, Number lat) {
+    public LngLat(double lng, double lat) {
         this.lng = lng;
         this.lat = lat;
     }
