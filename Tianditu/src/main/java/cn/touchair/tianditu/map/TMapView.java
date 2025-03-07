@@ -39,6 +39,7 @@ import cn.touchair.tianditu.control.TZoomControl;
 import cn.touchair.tianditu.entity.TLngLat;
 import cn.touchair.tianditu.entity.TLocationAddress;
 import cn.touchair.tianditu.entity.TPoint;
+import cn.touchair.tianditu.overlay.TInfoWindow;
 import cn.touchair.tianditu.overlay.TIcon;
 import cn.touchair.tianditu.overlay.TLabel;
 import cn.touchair.tianditu.overlay.TMarker;
@@ -154,7 +155,7 @@ public class TMapView extends FrameLayout {
 
     public void setMyLocation(TLngLat lngLat, boolean autoGetLocationAddress) {
         panTo(lngLat);
-        removeMarker(IDENT_MY_LOCATION);
+        removeOverlay(IDENT_MY_LOCATION);
         addMarker(IDENT_MY_LOCATION, lngLat, TIcon.CENTER_POINT);
         if (autoGetLocationAddress) {
             getLocationAddress(lngLat);
@@ -173,12 +174,8 @@ public class TMapView extends FrameLayout {
         callJs(String.format(Locale.US, "TOverLay.addLabel(\"%s\", %s)", ident, label.toJson()));
     }
 
-    public void removeLabel(@NonNull String ident) {
-        callJs("TOverLay.removeLabel(\"" + ident + "\");");
-    }
-
-    public void removeMarker(String ident) {
-        callJs("TOverLay.removeMarker(\"" + ident + "\");");
+    public void removeOverlay(@NonNull String ident) {
+        callJs("TOverLay.removeOverLay(\"" + ident + "\");");
     }
 
     public void addCopyright(TCopyright copyright) {
@@ -188,6 +185,14 @@ public class TMapView extends FrameLayout {
     public void removeCopyright(@NonNull String ident) {
         callJs(String.format(Locale.US, "TCopyright.removeCopyright(%s);", ident));
     }
+
+    public void addInfoWindow(@NonNull String ident, TInfoWindow window) {
+        callJs(String.format(Locale.US, "TOverLay.addInfoWindow(\"%s\", %s);", ident, window.toJson()));
+    }
+
+//    public void closeInfoWindow(@NonNull String ident) {
+//        callJs(String.format(Locale.US, "TOverLay.closeInfoWindow(\"%s\");", ident));
+//    }
 
     private void setOverviewMapControlEnable(boolean enable) {
         if (enable) {

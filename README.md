@@ -185,7 +185,7 @@ TIcon icon = TIcon.fromBitmap(bitmap, new TPoint(scaleWidth, scaleHeight));
 **删除标记**
 
 ```java
-binding.mapView.removeMarker("some_unique_id");
+binding.mapView.removeOverlay("some_unique_id");
 ```
 
 #### 文字标签（Label）
@@ -199,7 +199,20 @@ binding.mapView.addLabel("some_unique_id", new TLabel("Simple Text Label", new T
 **删除标签**
 
 ```java
-binding.mapView.removeLabel("some_unique_id");
+binding.mapView.removeOverlay("some_unique_id");
+```
+
+#### 信息窗口（InfoWindow）
+
+**添加信息窗口**
+
+```java
+binding.mapView.addInfoWindow("some_unique_id", new TInfoWindow("A Simple InfoWindow.", new TLngLat(location)));
+```
+**删除信息窗口**
+
+```java
+binding.mapView.removeOverlay("some_unique_id");
 ```
 
 ### 服务类

@@ -178,7 +178,7 @@ let TOverLay = {
     _overlays: new Map(),
     addMarker: function (ident, ctx) {
         if (map) {
-            this.removeMarker(ident);
+            this.removeOverLay(ident);
             let opts = {
                 "draggable": ctx.draggable,
                 "title": ctx.title,
@@ -198,23 +198,54 @@ let TOverLay = {
             TMap.addOverLay(this._overlays[ident]);
         }
     },
-    removeMarker: function (ident) {
-        this._overlays[ident] && TMap.removeOverLay(this._overlays[ident]);
-    },
     addLabel: function (ident, ctx) {
         if (map) {
-            this.removeLabel(ident);
-            let lable = new T.Label({
+            this.removeOverLay(ident);
+            let label = new T.Label({
                 text: ctx.text,
                 offset: ctx.offset,
-                position: ctx.position
+                position: ctx.position,
+                opacity: ctx.opacity
             });
-            this._overlays[ident] = lable;
+            label.setTitle(ctx.title);
+            label.setFontSize(ctx.fontSize);
+            label.setFontColor(ctx.fontColor);
+            label.setBackgroundColor(ctx.backgroundColor);
+            label.setBorderLine(ctx.borderLine);
+            label.setBorderColor(ctx.borderColor);
+            this._overlays[ident] = label;
             TMap.addOverLay(this._overlays[ident]);
         }
     },
-    removeLabel: function (ident) {
-        this._overlays[ident] && TMap.removeOverLay(this._overlays[ident]);
+    addInfoWindow: function (ident, ctx) {
+        if(this._overlays[ident]) {
+            let window = this._overlays[ident];
+            window.setLngLat(ctx.position);
+            window.setContent(ctx.content);
+            window.setOffset(ctx.offset);
+            window.update();
+        } else {
+            let window = new T.InfoWindow(ctx.content, {
+                minWidth: ctx.minWidth,
+                maxWidth: ctx.maxWidth,
+                maxHeight: ctx.maxHeight,
+                autoPan: ctx.autoPan,
+                closeButton: ctx.closeButton,
+                offset: ctx.offset,
+                autoPanPadding: ctx.autoPanPadding,
+                closeOnClick: ctx.closeOnClick
+            });
+            window.setLngLat(ctx.position);
+            TMap.addOverLay(window);
+            this._overlays[ident] = window;
+        }
+    },
+    removeOverLay: function (ident) {
+        let overlay = this._overlays[ident];
+        if(overlay) {
+            TMap.removeOverLay(overlay);
+            this._overlays.delete(ident);
+        }
     }
 }
 
