@@ -91,18 +91,21 @@ TMapInitializer.initialize(applicationContext);
 
 属性：
 
-| Attribute                           | Type        | Default value    |
-|-------------------------------------| ----------- | ---------------- |
-| `app:showZoomControl`               | `Boolean`   | `false`          |
-| `app:zoomControlGravity`            | `Enum`      | `left_of_top`    |
-| `app:showScaleControl`              | `Boolean`   | `false`          |
-| `app:scaleControlGravity`           | `Enum`      | `left_of_bottom` |
-| `app:showMapTypeControl`            | `Boolean`   | `false`          |
-| `app:showOverviewMapControl`        | `Boolean`   | `false`          |
-| `app:overviewMapControlGravity`     | `Enum`      | `right_of_top`   |
-| `app:overviewMapControlDefaultOpen` | `Boolean`   | `false`          |
-| `app:overviewMapControlWidth`       | `Dimension` | `120px`          |
-| `app:overviewMapControlHeight`      | `Dimension` | `120px`          |
+| Attribute                           | Type        | Default value    | Desc         |
+| ----------------------------------- | ----------- | ---------------- | ------------ |
+| `app:showZoomControl`               | `Boolean`   | `false`          |              |
+| `app:zoomControlGravity`            | `Enum`      | `left_of_top`    |              |
+| `app:showScaleControl`              | `Boolean`   | `false`          |              |
+| `app:scaleControlGravity`           | `Enum`      | `left_of_bottom` |              |
+| `app:showMapTypeControl`            | `Boolean`   | `false`          |              |
+| `app:showOverviewMapControl`        | `Boolean`   | `false`          |              |
+| `app:overviewMapControlGravity`     | `Enum`      | `right_of_top`   |              |
+| `app:overviewMapControlDefaultOpen` | `Boolean`   | `false`          |              |
+| `app:overviewMapControlWidth`       | `Dimension` | `120px`          |              |
+| `app:overviewMapControlHeight`      | `Dimension` | `120px`          |              |
+| `app:enableDrag`                    | `Boolean`   | `true`           | 地图拖拽     |
+| `app:enableDoubleClickZoom`         | `Boolean`   | `true`           | 双击缩放     |
+| `app:enablePinchZoom`               | `Boolean`   | `true`           | 双指操作缩放 |
 
 ### 显示位置
 

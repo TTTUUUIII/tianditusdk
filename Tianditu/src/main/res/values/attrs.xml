@@ -26,5 +26,8 @@
         <attr name="overviewMapControlWidth" format="dimension" />
         <attr name="overviewMapControlHeight" format="dimension" />
         <attr name="showMapTypeControl" format="boolean" />
+        <attr name="enableDrag" format="boolean" />
+        <attr name="enableDoubleClickZoom" format="boolean" />
+        <attr name="enablePinchZoom" format="boolean" />"
     </declare-styleable>
 </resources>

@@ -73,6 +73,9 @@ public class TMapView extends FrameLayout {
     private float mOverviewMapControlWidth = 120;
     private float mOverviewMapControlHeight = 120;
     private boolean mShowMapTypeControl = false;
+    private boolean mEnableDrag = true;
+    private boolean mEnableDoubleClickZoom = true;
+    private boolean mEnablePinchZoom = true;
 
     public TMapView(@NonNull Context context) {
         this(context, null);
@@ -138,11 +141,18 @@ public class TMapView extends FrameLayout {
             mOverviewMapControlDefaultOpen = attributes.getBoolean(R.styleable.TMapView_overviewMapControlDefaultOpen, mOverviewMapControlDefaultOpen);
             mOverviewMapControlWidth = attributes.getDimension(R.styleable.TMapView_overviewMapControlWidth, mOverviewMapControlWidth);
             mOverviewMapControlHeight = attributes.getDimension(R.styleable.TMapView_overviewMapControlHeight, mOverviewMapControlHeight);
+            mEnableDrag = attributes.getBoolean(R.styleable.TMapView_enableDrag, mEnableDrag);
+            mEnableDoubleClickZoom = attributes.getBoolean(R.styleable.TMapView_enableDoubleClickZoom, mEnableDoubleClickZoom);
+            mEnablePinchZoom = attributes.getBoolean(R.styleable.TMapView_enablePinchZoom, mEnablePinchZoom);
         }
     }
 
     public void panTo(TLngLat lngLat) {
         callJs("TMap.panTo("+ lngLat.toJson() +");");
+    }
+
+    public void panBy(TPoint point) {
+        callJs("TMap.panBy("+ point.toJson() +");");
     }
 
     public void addMarker(String ident, TLngLat lngLat) {
@@ -190,9 +200,21 @@ public class TMapView extends FrameLayout {
         callJs(String.format(Locale.US, "TOverLay.addInfoWindow(\"%s\", %s);", ident, window.toJson()));
     }
 
-//    public void closeInfoWindow(@NonNull String ident) {
-//        callJs(String.format(Locale.US, "TOverLay.closeInfoWindow(\"%s\");", ident));
-//    }
+    public void setEnableDrag(boolean enable) {
+        callJs("TMap.setEnableDrag(" + enable + ");");
+    }
+
+    public void setEnableDoubleClickZoom(boolean enable) {
+        callJs("TMap.setEnableDoubleClickZoom(" + enable +")");
+    }
+
+    public void setEnablePinchZoom(boolean enable) {
+        callJs("TMap.setEnablePinchZoom(" + enable +")");
+    }
+
+    public void closeInfoWindow() {
+        callJs("TMap.closeInfoWindow();");
+    }
 
     private void setOverviewMapControlEnable(boolean enable) {
         if (enable) {
@@ -297,6 +319,9 @@ public class TMapView extends FrameLayout {
         setZoomControlEnable(mShowZoomControl);
         setMapTypeControlEnable(mShowMapTypeControl);
         setOverviewMapControlEnable(mShowOverviewMapControl);
+        setEnableDrag(mEnableDrag);
+        setEnableDoubleClickZoom(mEnableDoubleClickZoom);
+        setEnablePinchZoom(mEnablePinchZoom);
         while (!mWaitList.isEmpty()) {
             mWaitList.remove().run();
         }

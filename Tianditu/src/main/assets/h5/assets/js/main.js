@@ -35,6 +35,9 @@ let TMap = {
     panTo: function (lnglat) {
         map && map.panTo(lnglat);
     },
+    panBy: function (point) {
+        map && map.panBy(point);
+    },
     addOverLay: function (overlay) {
         map && map.addOverLay(overlay);
     },
@@ -49,6 +52,36 @@ let TMap = {
     },
     removeControl: function (control) {
         map && map.removeControl(control);
+    },
+    closeInfoWindow: function () {
+        map && map.closeInfoWindow();
+    },
+    setEnableDrag: function(enable) {
+        if(map) {
+            if (enable) {
+                map.enableDrag();
+            } else {
+                map.disableDrag();
+            }
+        }
+    },
+    setEnableDoubleClickZoom: function(enable) {
+        if(map) {
+            if (enable) {
+                map.enableDoubleClickZoom();
+            } else {
+                map.disableDoubleClickZoom();
+            }
+        }
+    },
+    setEnablePinchZoom: function(enable) {
+        if(map) {
+            if(enable) {
+                map.enablePinchToZoom();
+            } else {
+                map.disablePinchToZoom();
+            }
+        }
     }
 }
 
